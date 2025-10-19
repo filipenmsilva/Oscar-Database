@@ -13,7 +13,8 @@ Abaixo, algumas atividades para trabalharmos.
 * Qual o **total** de registros na tabela indicados?
 
 R:11013
-Q:db.filmes.countDocuments({})
+Q:
+db.filmes.countDocuments({})
 
 ---
 
@@ -54,6 +55,7 @@ Q:
 R: 1 vez
 
 Q:
+
 db["filmes"].countDocuments({nome_do_indicado: "Natalie Portman", vencedor: "true"})
 
 
@@ -61,21 +63,27 @@ db["filmes"].countDocuments({nome_do_indicado: "Natalie Portman", vencedor: "tru
 
 * Quantas vezes Viola Davis foi indicada ao Oscar?
 R: 4 vezes
-Q: db["filmes"].countDocuments({nome_do_indicado: "Viola Davis"})
+Q:
+
+db["filmes"].countDocuments({nome_do_indicado: "Viola Davis"})
 
 ---
 
 * Quantos Oscars Viola Davis ganhou?
 
 R: 1 vez
-Q:db["filmes"].countDocuments({nome_do_indicado: "Viola Davis", vencedor: "true"})
+Q:
+
+db["filmes"].countDocuments({nome_do_indicado: "Viola Davis", vencedor: "true"})
 
 
 ---
 
 * Amy Adams já ganhou algum Oscar?
 R: Não
-Q: db["filmes"].countDocuments({nome_do_indicado: "Amy Adams", vencedor: "true"})
+Q:
+
+db["filmes"].countDocuments({nome_do_indicado: "Amy Adams", vencedor: "true"})
 
 ---
 
@@ -83,7 +91,9 @@ Q: db["filmes"].countDocuments({nome_do_indicado: "Amy Adams", vencedor: "true"}
 
 R:1439
 
-Q: db.filmes.aggregate([
+Q: 
+
+db.filmes.aggregate([
   { $group: { 
       _id: "$nome_do_indicado", 
       total: { $sum: 1 } 
@@ -98,6 +108,9 @@ Q: db.filmes.aggregate([
 * A série de filmes Toy Story ganhou Oscars em quais anos?
 R: Nenhum
 
+Q:
+
+
 db["filmes"].find({nome_do_filme: "Toy Story", vencedor:"true"},
                   {ano_cerimonia: 1 }).pretty();
 
@@ -106,7 +119,9 @@ db["filmes"].find({nome_do_filme: "Toy Story", vencedor:"true"},
 * A partir de que ano que a categoria "Actress" deixa de existir? 
 
 R: 1976
-Q: db.filmes.find({ categoria: "ACTRESS" }, {_id:0, ano_cerimonia:1}).sort({ ano_cerimonia: -1 }).limit(1)
+Q:
+
+db.filmes.find({ categoria: "ACTRESS" }, {_id:0, ano_cerimonia:1}).sort({ ano_cerimonia: -1 }).limit(1)
 
 ---
 
@@ -114,7 +129,9 @@ Q: db.filmes.find({ categoria: "ACTRESS" }, {_id:0, ano_cerimonia:1}).sort({ ano
 
 R:Louise Dresser
 
-Q:db.filmes.find({categoria: "ACTRESS"},{_id:0, nome_do_indicado:1}).sort({ano_cerimonia: 1}).limit(1)
+Q:
+
+db.filmes.find({categoria: "ACTRESS"},{_id:0, nome_do_indicado:1}).sort({ano_cerimonia: 1}).limit(1)
 
 
 ---
@@ -122,6 +139,8 @@ Q:db.filmes.find({categoria: "ACTRESS"},{_id:0, nome_do_indicado:1}).sort({ano_c
 * No campo "Vencedor", altere todos os valores com "true" para 1 e todos os valores "false" para 0.
 
 Q:
+
+
 db.filmes.updateMany({vencedor: "true"}, {$set:{
   vencedor: 1
 }});
@@ -134,7 +153,9 @@ db.filmes.updateMany({vencedor: "true"}, {$set:{
 
 R:Edição 78
 
-Q:db.filmes.find({nome_do_filme: "Crash"},{cerimonia: 1, _id: 0}).pretty();
+Q:
+
+db.filmes.find({nome_do_filme: "Crash"},{cerimonia: 1, _id: 0}).pretty();
 
 ---
 
@@ -148,7 +169,9 @@ Q:db.filmes.find({nome_do_filme: "Central do Brasil"})
 
 * Inclua no banco 3 filmes que nunca foram nem nomeados ao Oscar, mas que merecem ser. 
 
-Q:db.filmes.insertMany([
+Q:
+
+db.filmes.insertMany([
   {
     id_registro: 11014,
     ano_filmagem: 2024,
@@ -187,7 +210,9 @@ Q:db.filmes.insertMany([
 
 R:sim
 
-Q: db.filmes.find({nome_do_indicado: "Denzel Washington"})
+Q: 
+
+db.filmes.find({nome_do_indicado: "Denzel Washington"})
 
 ---
 
@@ -195,11 +220,12 @@ Q: db.filmes.find({nome_do_indicado: "Denzel Washington"})
 
 R: Foram 97 filmes, acho que listar todos aqui é difícil. (OBS: a categoria mudou de nome algumas vezes)
 
-Q:db.filmes.find({
+Q:
+
+db.filmes.find({
   $or:[
     {categoria:/OUTSTANDING/}, {categoria: "BEST PICTURE"}, {categoria: "BEST MOTION PICTURE"}],
-  vencedor:1})
-(OBS: Atualizei para todos serem considerados "BEST PICTURE" para fazer a penúltima, mas mesmo assim não estou conseguindo)
+  vencedor:1}) //(OBS: Atualizei para todos serem considerados "BEST PICTURE" para fazer a penúltima, mas mesmo assim não estou conseguindo)
 
 
 ---
@@ -208,7 +234,9 @@ Q:db.filmes.find({
 
 R: 1959
 
-Q:db.filmes.find({nome_do_indicado:"Sidney Poitier"},{ano_cerimonia:1, _id:0}).pretty();
+Q:
+
+db.filmes.find({nome_do_indicado:"Sidney Poitier"},{ano_cerimonia:1, _id:0}).pretty();
 
 
 ---
@@ -223,7 +251,9 @@ Q:
 * Denzel Washington e Jamie Foxx já concorreram ao Oscar no mesmo ano?
 R: Não
 
-Q:db.filmes.aggregate([{
+Q:
+
+db.filmes.aggregate([{
     $match: {
       nome_do_indicado: { $in: ["Denzel Washington", "Jamie Foxx"] }}
   },{
